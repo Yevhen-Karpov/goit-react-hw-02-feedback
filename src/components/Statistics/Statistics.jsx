@@ -5,7 +5,7 @@ export default function Statistics({ statistics, total, positivePercentage }) {
   return (
     <ul>
       {statistics.map(([key, value]) => (
-        <li>
+        <li key={key}>
           {key}: {value}
         </li>
       ))}
@@ -16,9 +16,7 @@ export default function Statistics({ statistics, total, positivePercentage }) {
 }
 
 Statistics.propTypes = {
-  good: PropTypes.number.isRequired,
-  neutral: PropTypes.number.isRequired,
-  bad: PropTypes.number.isRequired,
+  statistics: PropTypes.array.isRequired,
   total: PropTypes.number.isRequired,
   positivePercentage: PropTypes.number.isRequired,
 };
