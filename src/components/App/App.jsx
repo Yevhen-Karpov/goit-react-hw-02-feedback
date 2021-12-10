@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Statistics from './Statistics/Statistics';
-import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
-import Section from './Section/Section';
-import Notification from './Notification/Notification';
+import Statistics from '../Statistics/Statistics';
+import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
+import Section from '../Section/Section';
+import Notification from '../Notification/Notification';
 
 export default class App extends Component {
   state = {
@@ -12,9 +12,7 @@ export default class App extends Component {
   };
 
   countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
-    const result = good + neutral + bad;
-    return result;
+    return Object.values(this.state).reduce((akk, value) => akk + value, 0);
   };
 
   countPositiveFeedbackPercentage = () => {
@@ -31,16 +29,15 @@ export default class App extends Component {
     }));
   };
   render() {
-    const { good, neutral, bad } = this.state;
     const total = this.countTotalFeedback();
     const positivePercentage = this.countPositiveFeedbackPercentage();
-
-    const objKey = Object.keys(this.state);
+    const statistics = Object.entries(this.state);
+    const options = Object.keys(this.state);
     return (
       <>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={objKey}
+            options={options}
             onLeaveFeedback={this.onLeaveFeedback}
           />
         </Section>
@@ -50,9 +47,7 @@ export default class App extends Component {
         ) : (
           <Section title="Statistics">
             <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
+              statistics={statistics}
               total={total}
               positivePercentage={positivePercentage}
             />
